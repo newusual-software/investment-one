@@ -4,8 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
+}
+
+
+.marquee {
+  display: flex;
+  animation: marqueeAnimation 20s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+
+@keyframes marqueeAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
