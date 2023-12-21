@@ -5,13 +5,13 @@ export default function DefaultLayout({ children }) {
   return (
     <div>
       <Header />
-      <div className="flex gap-4 flex-row">
+      <div className="flex flex-row">
         <div >
           <nav>
             <Sidebar />
           </nav>
         </div>
-        <div>{children}</div>
+        <div className="w-full overflow-hidden">{children}</div>
       </div>
     </div>
   );
