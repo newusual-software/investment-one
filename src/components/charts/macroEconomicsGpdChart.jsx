@@ -1,42 +1,50 @@
-import CanvasJSReact from '@canvasjs/react-charts';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js/auto';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 
 export default function MacroEconomicsGpdChart() {
-  var CanvasJSChart = CanvasJSReact.CanvasJSChart;
   const options = {
-    theme: "light1",
-    animationEnabled: true,
-
-    axisY: {
-      title: "Percentage(%)",
-      minimum: -7,
-      maximum: 2,
-      interval: 1,
-      fillOpacity: 0,
-    },
-    axisX: {
-      valueFormatString: "YYYY",
-      minimum: new Date(2020, 0),
-      maximum: new Date(2021, 0),
-    },
-    data: [
-      {
-        type: "splineArea",
-        yValueFormatString: "#,##0.## Million",
-        color: "rgba(255,0,0,0.7)",
-        dataPoints: [
-          { x: new Date(2021, 0), y: 0 },
-          { x: new Date(2020, 4), y: 0 },
-          { x: new Date(2020, 3), y: -3.62 },
-          { x: new Date(2020, 2), y: -6.1 },
-          { x: new Date(2020, 0), y: 1.87 },
-        ]
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
       },
-    ]
+      title: {
+        display: false,
+        text: 'Chart.js Line Chart',
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Percentage (%)',
+        },
+      },
+    },
   };
 
-  return (
-    <div>
-      <CanvasJSChart options={options} />
-    </div>
-  );
+  const labels = ['2023 Q1', '2022 Q2', '2021 Q3', '2020 Q4', '2020 Q5'];
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: true,
+        label: 'GDP Growth',
+        data: [0, 0, -3.62, -6.1, 1.87], // Values for each quarter
+        borderColor: '#DD4F05',
+        backgroundColor: 'rgba(255, 227, 212)',
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        pointStyle: 'circle',
+        cubicInterpolationMode: 'monotone',
+        borderCapStyle: 'round',
+      },
+    ],
+  };
+
+  return <Line options={options} data={data} />;
 }

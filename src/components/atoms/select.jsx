@@ -1,14 +1,16 @@
 import { Select, Option } from "@material-tailwind/react";
- 
-export function SelectDefault() {
+
+export function SelectWithComponents({ selectedOption, onChange }) {
   return (
     <div className="w-32">
-      <Select label="Select Version">
-        <Option>Material Tailwind HTML</Option>
-        <Option>Material Tailwind React</Option>
-        <Option>Material Tailwind Vue</Option>
-        <Option>Material Tailwind Angular</Option>
-        <Option>Material Tailwind Svelte</Option>
+      <Select
+        className="border-2 border-orange"
+        value={selectedOption}
+        onChange={onChange}
+      >
+        <Option value="GDP">GDP</Option>
+        <Option value="Fiscal">Fiscal</Option>
+        <Option value="Inflation">Inflation</Option>
       </Select>
     </div>
   );
