@@ -29,7 +29,7 @@ export default function Fiscal() {
           },
           title: {
             display: true,
-            text: 'Chart.js Bar Chart',
+            text: ' FAAC allocation',
           },
         },
       };
@@ -40,13 +40,13 @@ export default function Fiscal() {
         labels,
         datasets: [
           {
-            label: 'Dataset 1',
-            data: labels.map(() => Number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            label: '2023',
+            data: [640, 606, 681, 617, 606],
+            backgroundColor: '#DD4F05',
           },
           {
-            label: 'Dataset 2',
-            data: labels.map(() => Number({ min: 0, max: 1000 })),
+            label: '2022',
+            data: [600, 200, 581, 417, 605],
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
           },
         ],
