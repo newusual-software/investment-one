@@ -40,7 +40,7 @@ export function TabsWithIcon() {
             key={value}
             value={value}
             onClick={() => setActiveTab(value)}
-            className={activeTab === value ? "text-orange" : ""}
+            className={activeTab === value ? "text-orange bg-white" : "bg-[#E0E0E0]"}
           >
             <div className="flex flex-row gap-2">
               <div>{React.createElement(icon, { className: "w-5 h-5" })}</div>
