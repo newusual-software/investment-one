@@ -4,7 +4,7 @@ export function SelectWithComponents({ selectedOption, onChange }) {
   return (
     <div className="w-32">
       <Select
-        className="border-2 border-orange"
+        className="border-2 border-orange border-t-none shadow-none"
         value={selectedOption}
         onChange={onChange}
       >

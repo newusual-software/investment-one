@@ -19,7 +19,7 @@ import {
   );
   
 
-export default function Fiscal() {
+export default function FiscalChart() {
 
       const options = {
         responsive: true,
