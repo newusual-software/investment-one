@@ -27,7 +27,7 @@ export function TabsWithIcon() {
     },
   ];
   return (
-    <Tabs value={activeTab} className="w-full">
+    <Tabs value={activeTab} className="w-full shadow-lg rounded">
       <TabsHeader
         className="rounded-none border-t border-blue-gray-50 bg-transparent p-0 h-14"
         indicatorProps={{
