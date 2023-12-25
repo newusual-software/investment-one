@@ -9,6 +9,7 @@ import {
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import { MacroEconomicsContent } from "../macroEconomics/macroEconomicsContent";
+import { Outlook } from "../macroEconomics/outlook";
 export function TabsWithIcon() {
   const [activeTab, setActiveTab] = useState("MacroEconomics");
   const data = [
@@ -22,8 +23,7 @@ export function TabsWithIcon() {
       label: "Outlook",
       value: "Outlook",
       icon: ListBulletIcon,
-      desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
+      desc: <Outlook />,
     },
   ];
   return (
@@ -51,7 +51,7 @@ export function TabsWithIcon() {
       </TabsHeader>
       <TabsBody>
         {data.map(({ value, desc }) => (
-          <TabPanel key={value} value={value}>
+          <TabPanel key={value} value={value} className="w-[38rem]">
             {desc}
           </TabPanel>
         ))}

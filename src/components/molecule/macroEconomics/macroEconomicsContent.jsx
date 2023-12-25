@@ -53,7 +53,7 @@ export function MacroEconomicsContent() {
 
   return (
     <div className="w-full">
-      <div className="w-full justify-between gap-96 items-center flex">
+      <div className="w-full justify-between items-center flex">
         <div>
           {/* Pass the onChange prop to SelectWithComponents */}
           <SelectWithComponents
