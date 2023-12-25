@@ -23,7 +23,7 @@ export default function MacroEconomics() {
             Analyst View
           </div>
         </div>
-        <button className="px-5 py-2.5 bg-orange rounded-[10px] justify-center items-center gap-2 flex">
+        <button className="px-5 border-none outline-non py-2.5 bg-orange rounded-[10px] justify-center items-center gap-2 flex">
           <div className="text-center text-white text-base font-normal font-workSans leading-snug tracking-wide">
             View All
           </div>
