@@ -6,26 +6,10 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import { ListBulletIcon } from "@heroicons/react/24/solid";
-import { ChartBarIcon } from "@heroicons/react/24/outline";
-import { MacroEconomicsContent } from "../macroEconomics/macroEconomicsContent";
-import { Outlook } from "../macroEconomics/outlook";
-export function TabsWithIcon() {
-  const [activeTab, setActiveTab] = useState("MacroEconomics");
-  const data = [
-    {
-      label: "Macro-Economics",
-      value: "MacroEconomics",
-      icon: ChartBarIcon,
-      desc: <MacroEconomicsContent />,
-    },
-    {
-      label: "Outlook",
-      value: "Outlook",
-      icon: ListBulletIcon,
-      desc: <Outlook />,
-    },
-  ];
+
+export function TabsWithIcon({data,activeTabValue}) {
+  const [activeTab, setActiveTab] = useState(activeTabValue);
+
   return (
     <Tabs value={activeTab} className="w-full shadow-lg rounded">
       <TabsHeader
@@ -44,7 +28,7 @@ export function TabsWithIcon() {
           >
             <div className="flex flex-row gap-2">
               <div>{React.createElement(icon, { className: "w-5 h-5" })}</div>
-              <div>{label}</div>
+              <div className="font-semibold font-workSans text-lg">{label}</div>
             </div>
           </Tab>
         ))}
