@@ -5,6 +5,9 @@ import { AgroOutlook } from "../outlooks/agroOutlook";
 import { AltEquitiesSelect } from "../../atoms/altEquitySelect";
 import { Banking } from "../outlooks/banking";
 import { InitialImpression } from "../outlooks/initialImpression";
+import { Breweries } from "../outlooks/breweries";
+import { BrewiesInitialImpression } from "../outlooks/brewiesInitialImpression";
+
 export function EquitiesContent() {
   const [selectedOption, setSelectedOption] = useState("NSE-ASI");
   const [altSelectedOption, setAltSelectedOption] = useState("company-report");
@@ -25,18 +28,58 @@ export function EquitiesContent() {
         return <NSEASIChart />;
       case "agro":
         return <AgroOutlook />;
-      
-      default:
+      case "banking":
         // Check altSelectedOption for rendering components
         switch (altSelectedOption) {
           case "company-report":
             return <Banking />;
           case "initial-impression":
-            return <InitialImpression/>;
+            return <InitialImpression />;
           // Add more cases for other altSelectedOption values
           default:
             return null;
         }
+      case "breweries":
+        // Check altSelectedOption for rendering components
+        switch (altSelectedOption) {
+          case "company-report":
+            return <Breweries />;
+          case "initial-impression":
+            return <BrewiesInitialImpression />;
+          default:
+            return null;
+        }
+      case "consumer-goods":
+        switch (altSelectedOption) {
+          case "company-report":
+            return <Breweries />;
+          case "initial-impression":
+            return <BrewiesInitialImpression />;
+          default:
+            return null;
+        }
+      case "industrial":
+        switch (altSelectedOption) {
+          case "company-report":
+            return <Breweries />;
+          case "initial-impression":
+            return <BrewiesInitialImpression />;
+          default:
+            return null;
+        }
+      case "oil-&-gas":
+        switch (altSelectedOption) {
+          case "company-report":
+            return <Breweries />;
+          case "initial-impression":
+            return <BrewiesInitialImpression />;
+          default:
+            return null;
+        }
+        
+      default:
+        return null
+        
     }
   };
 

@@ -5,7 +5,7 @@ import { Button, Dialog } from "@material-tailwind/react";
 const pdfData = {
   pdfs: [
     {
-      title: "banking 2019",
+      title: "brewing 2019",
       image_link:
         "https://res.cloudinary.com/phantom1245/image/upload/v1703445036/investment-one/preview_rjwl0l.jpg",
       file_link: GdpReportfile,
@@ -13,7 +13,7 @@ const pdfData = {
   ],
 };
 
-export function Banking() {
+export function Breweries() {
   const [open, setOpen] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState(null);
 
