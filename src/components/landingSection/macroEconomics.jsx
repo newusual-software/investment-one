@@ -1,7 +1,24 @@
 import AnalystView from "../molecule/macroEconomics/analystView";
+import { MacroEconomicsContent } from "../molecule/macroEconomics/macroEconomicsContent";
+import { Outlook } from "../molecule/macroEconomics/outlook";
 import { TabsWithIcon } from "../molecule/tab/tab";
-
+import { ListBulletIcon } from "@heroicons/react/24/solid";
+import { ChartBarIcon } from "@heroicons/react/24/outline";
 export default function MacroEconomics() {
+  const data = [
+    {
+      label: "Macro-Economics",
+      value: "MacroEconomics",
+      icon: ChartBarIcon,
+      desc: <MacroEconomicsContent />,
+    },
+    {
+      label: "Outlook",
+      value: "Outlook",
+      icon: ListBulletIcon,
+      desc: <Outlook />,
+    },
+  ];
   return (
     <div className="flex my-10 gap-4 flex-row w-full">
       <div className="w-[60%] flex flex-col gap-10 items-start">
@@ -9,7 +26,7 @@ export default function MacroEconomics() {
           Macro-Economics
         </div>
         <div>
-          <TabsWithIcon />
+          <TabsWithIcon data={data} activeTabValue={"MacroEconomics"}/>
         </div>
       </div>
       <div className=" w-[40%] ">

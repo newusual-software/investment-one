@@ -4,6 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 
 export default function MacroEconomicsGpdChart() {
+  const smooth = true; // Set to true for smooth tension, false for no tension
   const options = {
     responsive: true,
     plugins: {
@@ -24,6 +25,11 @@ export default function MacroEconomicsGpdChart() {
         },
       },
     },
+    elements: {
+      line: {
+        tension: smooth ? 0.5: 0
+      },
+    },
   };
 
   const labels = ['2023 Q1', '2022 Q2', '2021 Q3', '2020 Q4', '2020 Q5'];
@@ -34,14 +40,12 @@ export default function MacroEconomicsGpdChart() {
       {
         fill: true,
         label: 'GDP Growth',
-        data: [0, 0, -3.62, -6.1, 1.87], // Values for each quarter
+        data: [0, 0, -3.62, -6.1, 1.87],
         borderColor: '#DD4F05',
         backgroundColor: 'rgba(255, 227, 212)',
         pointRadius: 5,
         pointHoverRadius: 7,
         pointStyle: 'circle',
-        cubicInterpolationMode: 'monotone',
-        borderCapStyle: 'round',
       },
     ],
   };
