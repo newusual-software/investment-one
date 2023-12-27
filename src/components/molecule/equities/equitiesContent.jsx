@@ -1,51 +1,70 @@
 import { useState } from "react";
-import FiscalChart from "../../charts/fiscalChart";
-import InflationChart from "../../charts/inflationChart";
-
 import { EquitiesSelect } from "../../atoms/equitySelect";
 import NSEASIChart from "../../charts/nse-asi";
-
+import { AgroOutlook } from "../outlooks/agroOutlook";
+import { AltEquitiesSelect } from "../../atoms/altEquitySelect";
+import { Banking } from "../outlooks/banking";
+import { InitialImpression } from "../outlooks/initialImpression";
 export function EquitiesContent() {
   const [selectedOption, setSelectedOption] = useState("NSE-ASI");
+  const [altSelectedOption, setAltSelectedOption] = useState("company-report");
 
   const handleSelectChange = (newOption) => {
     setSelectedOption(newOption);
-    // Reset the visibility when the option changes
+  };
+  
+  const handleAltSelectChange = (newOption) => {
+    setAltSelectedOption(newOption);
   };
 
+  const optionLowerCase = selectedOption ? selectedOption.toLowerCase() : "";
+
   const renderSelectedComponent = () => {
-    const optionLowerCase = selectedOption ? selectedOption.toLowerCase() : "";
-
-
-      // Render the corresponding chart component based on the selected option
-      switch (optionLowerCase) {
-        case "nse-asi":
-          return <NSEASIChart />;
-        case "fiscal":
-          return <FiscalChart />;
-        case "inflation":
-          return <InflationChart />;
-        default:
-          return null;
+    switch (optionLowerCase) {
+      case "nse-asi":
+        return <NSEASIChart />;
+      case "agro":
+        return <AgroOutlook />;
+      
+      default:
+        // Check altSelectedOption for rendering components
+        switch (altSelectedOption) {
+          case "company-report":
+            return <Banking />;
+          case "initial-impression":
+            return <InitialImpression/>;
+          // Add more cases for other altSelectedOption values
+          default:
+            return null;
+        }
     }
   };
 
   return (
-    <div className="w-full">
-      <div className="w-full justify-between items-center flex">
-        <div>
-          {/* Pass the onChange prop to SelectWithComponents */}
+    <div className="w-full h-[23rem]">
+      <div>
+        {(optionLowerCase === "agro" || optionLowerCase === "nse-asi") && (
           <EquitiesSelect
             selectedOption={selectedOption}
             onChange={handleSelectChange}
           />
-        </div>
-        
+        )}
+        {!(optionLowerCase === "agro" || optionLowerCase === "nse-asi") && (
+          <div className="flex gap-24 my-4">
+            <EquitiesSelect
+              selectedOption={selectedOption}
+              onChange={handleSelectChange}
+            />
+            <AltEquitiesSelect
+              selectedOption={altSelectedOption}
+              onChange={handleAltSelectChange}
+            />
+          </div>
+        )}
       </div>
       <div className="mt-8">
-       <hr /> 
+        <hr />
       </div>
-      
       <div className="">{renderSelectedComponent()}</div>
     </div>
   );
