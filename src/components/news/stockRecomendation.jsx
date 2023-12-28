@@ -39,7 +39,7 @@ class Marquee extends React.Component {
 
 export default function StockRecommendation() {
   return (
-    <div className="bg-dark text-white w-full flex h-[4rem]">
+    <div className="bg-dark text-white w-full flex h-[3rem]">
       <div className="px-4 uppercase w-[20%] text-sm gap-4 flex justify-start items-center">Stock Recommendations <img src="https://res.cloudinary.com/phantom1245/image/upload/v1703193506/investment-one/Vector_1_ydkxvq.png" alt="" /></div>
       <div className=" w-[80%] flex justify-center items-center ">
         <Marquee />
