@@ -19,7 +19,7 @@ export function Sidebar() {
   };
 
   return (
-    <div className="h-max w-32 min-w-full  shadow-xl flex justify-center items-start pl-24 shadow-blue-gray-900/5 bg-orange">
+    <div className=" sticky top-0 left-0 h-max w-32 min-w-[4rem]  shadow-xl flex justify-center items-start pl-24 shadow-blue-gray-900/5 bg-orange">
       <List >
         <ListItem onClick={() => navigate("/")}  className="flex text-[13px] text-white w-[8rem] text-center flex-col justify-center items-center">
           <div>
