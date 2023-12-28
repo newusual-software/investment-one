@@ -6,11 +6,9 @@ export default function DefaultLayout({ children }) {
     <div>
       <Header />
       <div className="flex flex-row">
-        <div >
-          <nav>
+        
             <Sidebar />
-          </nav>
-        </div>
+
         <div className="w-full overflow-hidden">{children}</div>
       </div>
     </div>
