@@ -3,7 +3,7 @@ import SideBar from "./sidebar";
 
 const Navigations = () => {
   return (
-    <div>
+    <div >
       <SideBar/>
     </div>
     // <div className="flex w-full largeTablet:hidden">
