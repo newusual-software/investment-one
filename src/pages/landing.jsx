@@ -1,5 +1,6 @@
 import Equities from "../components/landingSection/equities";
 import FixedIncome from "../components/landingSection/fixedIncome";
+import ForeignExchange from "../components/landingSection/foreignExchange";
 import MacroEconomics from "../components/landingSection/macroEconomics";
 import StockRecomendation from "../components/news/stockRecomendation";
 import DefaultLayout from "../layouts/defaultLayout";
@@ -17,6 +18,9 @@ export default function Landing() {
         </div>
         <div>
           <FixedIncome/>
+        </div>
+        <div>
+          <ForeignExchange/>
         </div>
       </div>
     </DefaultLayout>

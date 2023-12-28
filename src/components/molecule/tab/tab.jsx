@@ -27,7 +27,7 @@ export function TabsWithIcon({data,activeTabValue}) {
             className={activeTab === value ? "text-orange bg-white" : "bg-[#E0E0E0]"}
           >
             <div className="flex flex-row gap-2">
-              <div>{React.createElement(icon, { className: "w-5 h-5" })}</div>
+              <div>{React.createElement(icon, { className: "w-5 mt-1" })}</div>
               <div className="font-semibold font-workSans text-lg">{label}</div>
             </div>
           </Tab>
