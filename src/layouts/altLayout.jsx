@@ -30,9 +30,6 @@ export default function AltLayout({ children, title, handleLoadMore, next, prev,
           <div className="text-center text-[#212323] text-[22px] font-medium font-workSans">
             {title == null || "" ? "Equility Price List" : title}
           </div>
-          <div className="text-center text-[#7B7B7B] text-base font-normal font-workSans">
-            Report
-          </div>
         </div>
         <div className="flex items-start justify-start gap-2 ">
           <FilterSelect />
