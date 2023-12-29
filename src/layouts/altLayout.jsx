@@ -5,22 +5,9 @@ import React, { useState } from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-export default function AltLayout({ children, title }) {
+export default function AltLayout({ children, title, handleLoadMore, next, prev, active }) {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
-  const [active, setActive] = React.useState(1);
-
-  const next = () => {
-    if (active === 10) return;
-
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-
-    setActive(active - 1);
-  };
 
   const handleDateRangeChange = (item) => {
     const newDateRange = [item.selection];
@@ -76,7 +63,7 @@ export default function AltLayout({ children, title }) {
           </IconButton>
         </div>
         <div className="flex items-start justify-start gap-2 ">
-          <Button className="bg-orange">Load more</Button>
+          <Button className="bg-orange" onClick={handleLoadMore}>Load more</Button>
         </div>
       </div>
     </DefaultLayout>
