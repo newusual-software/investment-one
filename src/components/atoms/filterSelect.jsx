@@ -33,7 +33,7 @@ export function FilterSelect({onDateRangeChange }) {
   };
 
   return (
-    <div className="relative block">
+    <div className="relative z-[2] block">
       <button
         type="button"
         className="w-full flex items-center px-4 py-2 gap-3 text-sm font-medium text-gray-700 rounded-md border-orange border-2 "

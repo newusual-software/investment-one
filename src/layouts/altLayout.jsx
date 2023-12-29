@@ -1,27 +1,27 @@
 import { Button } from "@material-tailwind/react";
 import { FilterSelect } from "../components/atoms/filterSelect";
 import DefaultLayout from "./defaultLayout";
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function AltLayout({ children, title, handleLoadMore, next, prev, active }) {
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
+  // const [selectedStartDate, setSelectedStartDate] = useState(null);
+  // const [selectedEndDate, setSelectedEndDate] = useState(null);
 
-  const handleDateRangeChange = (item) => {
-    const newDateRange = [item.selection];
+  // const handleDateRangeChange = (item) => {
+  //   const newDateRange = [item.selection];
 
-    setSelectedStartDate(newDateRange[0].startDate);
-    setSelectedEndDate(newDateRange[0].endDate);
-  };
+  //   setSelectedStartDate(newDateRange[0].startDate);
+  //   setSelectedEndDate(newDateRange[0].endDate);
+  // };
 
-  const childrenWithProps = React.Children.map(children, (child) =>
-    React.cloneElement(child, {
-      selectedstartdate: selectedStartDate,
-      selectedenddate: selectedEndDate,
-    })
-  );
+  // const childrenWithProps = React.Children.map(children, (child) =>
+  //   React.cloneElement(child, {
+  //     selectedstartdate: selectedStartDate,
+  //     selectedenddate: selectedEndDate,
+  //   })
+  // );
 
   return (
     <DefaultLayout>
@@ -35,10 +35,10 @@ export default function AltLayout({ children, title, handleLoadMore, next, prev,
           </div>
         </div>
         <div className="flex items-start justify-start gap-2 ">
-          <FilterSelect onDateRangeChange={handleDateRangeChange} />
+          <FilterSelect />
         </div>
       </div>
-      <div className="my-12">{childrenWithProps}</div>
+      <div className="my-12">{children}</div>
       <div className="w-[full] h-[4rem] px-5 bg-white rounded shadow flex justify-between items-center">
         <div className="flex items-center gap-8">
           <IconButton
