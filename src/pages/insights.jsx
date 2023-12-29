@@ -180,7 +180,7 @@ export default function Insights() {
                   <img
                     src={imageUrls[startIndex + index]}
                     alt={`Random Image`}
-                    className="h-max object-cover"
+                    className="h-40 w-full max-w-full rounded-lg object-cover object-center"
                   />
                 )}
               </CardHeader>
