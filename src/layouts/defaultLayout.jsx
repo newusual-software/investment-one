@@ -1,3 +1,4 @@
+import Footer from "../components/common/footer/footer";
 import Header from "../components/common/header";
 import { Sidebar } from "../components/common/navigations/sidebar";
 
@@ -11,6 +12,7 @@ export default function DefaultLayout({ children }) {
 
         <div className="w-full overflow-hidden">{children}</div>
       </div>
+      <Footer />
     </div>
   );
 }
