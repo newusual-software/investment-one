@@ -1,79 +1,167 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AltLayout from "../layouts/altLayout";
+import GdpReportfile from "../assets/pdfs/Report.pdf";
+import { Dialog } from "@material-tailwind/react";
+
 import {
   Card,
   CardHeader,
   CardBody,
   Typography,
-  CardFooter,
 } from "@material-tailwind/react";
+
+const pdfData = [
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+  {
+    date: "270623",
+    file_link: GdpReportfile,
+  },
+];
 export default function Insights() {
-  // You can receive the selectedStartDate and selectedEndDate as props here
   const [active, setActive] = useState(1);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrls, setImageUrls] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedPdf, setSelectedPdf] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 8;
+
+
+  const handleOpen = (pdf) => {
+    setSelectedPdf(pdf);
+    setOpen(true);
+  };
 
   useEffect(() => {
-    const fetchRandomImage = async () => {
+    const fetchRandomImages = async () => {
       try {
         const response = await axios.get(`https://api.unsplash.com/photos/random`, {
           params: {
             query: "finance",
-            count: 1, // Number of images to retrieve
+            count: pdfData.length, // Fetch a random image for each item in pdfData
             client_id: 'Ei5L_WMwdu5qTDzm6UuWKChYUzdpGfpPMABrDr5zU4c',
-            w: 800,
-            h:600
+            orientation: "landscape"
           },
         });
 
-        const randomImage = response.data[0];
-        setImageUrl(randomImage.urls.regular);
+        const randomImages = response.data.map((image) => image.urls.regular);
+        setImageUrls(randomImages);
       } catch (error) {
-        console.error('Error fetching random image:', error);
+        console.error('Error fetching random images:', error);
       }
     };
 
-    fetchRandomImage();
+    fetchRandomImages();
   }, []);
 
   const next = () => {
-    if (active === 10) return;
-
+    if (active === Math.ceil(pdfData.length / ITEMS_PER_PAGE)) return;
     setActive(active + 1);
+    setCurrentPage(currentPage + 1);
   };
 
   const prev = () => {
     if (active === 1) return;
-
     setActive(active - 1);
-  };
-  const handleLoadMore = () => {
-    alert("working");
+    setCurrentPage(currentPage - 1);
   };
 
-  //   const YourComponent = ({ selectedstartdate, selectedenddate }) => {
-  //     // Your component logic using selectedStartDate and selectedEndDate
-  //     return (
-  //       <div>
-  //         <p>
-  //           Start Date:{" "}
-  //           {selectedstartdate !== null ? (
-  //             selectedstartdate.toString()
-  //           ) : (
-  //             <span>test</span>
-  //           )}
-  //         </p>
-  //         <p>
-  //           Start Date:{" "}
-  //           {selectedenddate !== null ? (
-  //             selectedenddate.toString()
-  //           ) : (
-  //             <span>test</span>
-  //           )}
-  //         </p>
-  //       </div>
-  //     );
-  //   };
+  const handleLoadMore = () => {
+    if (active === Math.ceil(pdfData.length / ITEMS_PER_PAGE)) return;
+    setActive(active + 1);
+    setCurrentPage(currentPage + 1);
+  };
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
 
   return (
     <AltLayout
@@ -83,31 +171,44 @@ export default function Insights() {
       active={active}
       handleLoadMore={handleLoadMore}
     >
-      {/* Pass your custom component with the received props */}
-      {/* <YourComponent /> */}
-      <div className="grid grid-cols-4">
-        <div>
-          <Card className="mt-6 w-80">
-            <CardHeader color="blue-gray" className="relative h-58">
-            {imageUrl && <img src={imageUrl} alt={`Random Image`} className=" h-1/2 object-cover"/>}
-            </CardHeader>
-            <CardBody>
-              <Typography variant="h5" className="mb-3 text-|orange">
-                MORNING INSIGHT 270623
-              </Typography>
-              <Typography>
-                The place is close to Barceloneta Beach and bus stop just 2 min
-                by walk and near to &quot;Naviglio&quot; where you can enjoy the
-                main night life in Barcelona.
-              </Typography>
-            </CardBody>
-            <CardFooter className="flex items-center justify-end">
- 
-        <Typography className="font-normal">January 10</Typography>
-      </CardFooter>
-          </Card>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      {pdfData.slice(startIndex, endIndex).map((data, index) => (
+          <div key={startIndex + index} onClick={() => handleOpen(data)}>
+            <Card className="mt-6">
+              <CardHeader color="blue-gray" className="relative h-58">
+                {imageUrls[startIndex + index] && (
+                  <img
+                    src={imageUrls[startIndex + index]}
+                    alt={`Random Image`}
+                    className="h-max object-cover"
+                  />
+                )}
+              </CardHeader>
+              <CardBody>
+                <Typography className="mb-1 text-md font-workSans font-semibold text-orange">
+                  MORNING INSIGHT {data.date}
+                </Typography>
+                <Typography>
+                  As the sun casts its first rays on the markets, let&apos;s
+                  seize the day with a quick snapshot of fiscal possibilities.
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
+        ))}
       </div>
+      {selectedPdf && (
+        <Dialog open={open} handler={() => setOpen(false)} size="xl">
+          <div className="flex mx-auto justify-center items-center h-full">
+            <iframe
+              src={selectedPdf.file_link}
+              title={selectedPdf.title}
+              width="100%"
+              height="600px"
+            />
+          </div>
+        </Dialog>
+      )}
     </AltLayout>
   );
 }
