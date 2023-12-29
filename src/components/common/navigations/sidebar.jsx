@@ -27,7 +27,7 @@ export function Sidebar() {
           </div>
           home
         </ListItem>
-        <ListItem onClick={() => navigate("/morning-insight")}  className="flex text-[13px] text-white w-[8rem] text-center flex-col justify-center items-center">
+        <ListItem onClick={() => navigate("/insight")}  className="flex text-[13px] text-white w-[8rem] text-center flex-col justify-center items-center">
           <div>
             <img src="https://res.cloudinary.com/phantom1245/image/upload/v1703179552/investment-one/fluent_weather-hail-day-20-regular_v0svpg.svg" />
           </div>
