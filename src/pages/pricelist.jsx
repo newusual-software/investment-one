@@ -12,7 +12,7 @@ import {
 import { pdfData } from '../data/pdf';
 
 
-export default function Insights() {
+export default function PriceList() {
   const [active, setActive] = useState(1);
   const [imageUrls, setImageUrls] = useState([]);
   const [open, setOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function Insights() {
 
   return (
     <AltLayout
-      title="Morning Insight"
+      title="Equity Price List "
       next={next}
       prev={prev}
       active={active}
@@ -93,7 +93,7 @@ export default function Insights() {
               </CardHeader>
               <CardBody>
                 <Typography className="mb-1 text-md font-workSans font-semibold text-orange">
-                  MORNING INSIGHT {data.date}
+                Price List {data.date}
                 </Typography>
                 <Typography>
                   As the sun casts its first rays on the markets, let&apos;s
