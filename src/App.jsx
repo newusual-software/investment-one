@@ -6,6 +6,7 @@ import PriceList from "./pages/pricelist.jsx";
 import DailyReport from "./pages/dailyReport.jsx";
 import WeeklyReport from "./pages/weeklyReport.jsx";
 import MonthlyReport from "./pages/monthlyReport.jsx";
+import ResearchPortal from "./pages/researchPortal.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           {/* landing route */}
           <Route path="/" element={<Landing />} />
+          <Route path="/research-portal" element={<ResearchPortal />} />
           <Route path="/insight" element={<Insights />} />
           <Route path="/equity-price-list" element={<PriceList />} />
           <Route path="/daily-market-report" element={<DailyReport />} />
