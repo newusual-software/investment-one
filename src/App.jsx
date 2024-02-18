@@ -7,6 +7,7 @@ import DailyReport from "./pages/dailyReport.jsx";
 import WeeklyReport from "./pages/weeklyReport.jsx";
 import MonthlyReport from "./pages/monthlyReport.jsx";
 import ResearchPortal from "./pages/researchPortal.jsx";
+import InsightData from "./pages/insightData.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/daily-market-report" element={<DailyReport />} />
           <Route path="/weekly-market-report" element={<WeeklyReport />} />
           <Route path="/monthly" element={<MonthlyReport />} />
+          <Route path="/insight-data/:id" element={<InsightData />} />
         </Routes>
       </Router>
     </>

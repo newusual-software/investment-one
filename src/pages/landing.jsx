@@ -8,45 +8,44 @@ import {
   Typography,
   IconButton,
   Button,
-  Dialog,
 } from "@material-tailwind/react";
 import { pdfData } from "../data/pdf";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 export default function Landing() {
   const [active, setActive] = useState(1);
   const [imageUrls, setImageUrls] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [selectedPdf, setSelectedPdf] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
+  let navigate = useNavigate();
   const ITEMS_PER_PAGE = 8;
 
-
-  const handleOpen = (pdf) => {
-    setSelectedPdf(pdf);
-    setOpen(true);
-  };
 
   useEffect(() => {
     const fetchRandomImages = async () => {
       try {
-        const response = await axios.get(`https://api.unsplash.com/photos/random`, {
-          params: {
-            query: "finance",
-            count: pdfData.length, // Fetch a random image for each item in pdfData
-            client_id: 'Ei5L_WMwdu5qTDzm6UuWKChYUzdpGfpPMABrDr5zU4c',
-            orientation: "landscape"
-          },
-        });
+        const response = await axios.get(
+          `https://api.unsplash.com/photos/random`,
+          {
+            params: {
+              query: "finance",
+              count: pdfData.length, // Fetch a random image for each item in pdfData
+              client_id: "Ei5L_WMwdu5qTDzm6UuWKChYUzdpGfpPMABrDr5zU4c",
+              orientation: "landscape",
+            },
+          }
+        );
 
         const randomImages = response.data.map((image) => image.urls.regular);
         setImageUrls(randomImages);
       } catch (error) {
-        setImageUrls("https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg")
+        setImageUrls(
+          "https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg"
+        );
 
-        console.error('Error fetching random images:', error);
+        console.error("Error fetching random images:", error);
       }
     };
 
@@ -74,7 +73,6 @@ export default function Landing() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-
   return (
     <LandingLayout>
       <HomeBanner />
@@ -83,12 +81,15 @@ export default function Landing() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 px-20 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-9">
         {pdfData.slice(startIndex, endIndex).map((data, index) => (
-          <div key={startIndex + index}>
+          <div key={startIndex + index} onClick={() => navigate(`insight-data/${index}`)}>
             <Card className="mt-6">
               <CardHeader color="blue-gray" className="relative h-58">
                 {imageUrls[startIndex + index] && (
                   <img
-                    src={imageUrls[startIndex + index] || "https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg"}
+                    src={
+                      imageUrls[startIndex + index] ||
+                      "https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg"
+                    }
                     alt={`Random Image`}
                     className="h-40 w-full max-w-full rounded-lg object-cover object-center"
                   />
@@ -134,45 +135,32 @@ export default function Landing() {
         </div>
       </div>
       <div className="my-12 px-14">
-        
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      {pdfData.slice(startIndex, endIndex).map((data, index) => (
-          <div key={startIndex + index} onClick={() => handleOpen(data)}>
-            <Card className="mt-6">
-              <CardHeader color="blue-gray" className="relative h-58">
-                {imageUrls[startIndex + index] && (
-                  <img
-                    src={imageUrls[startIndex + index]}
-                    alt={`Random Image`}
-                    className="h-40 w-full max-w-full rounded-lg object-cover object-center"
-                  />
-                )}
-              </CardHeader>
-              <CardBody>
-                <Typography className="mb-1 text-lg leading-tight font-workSans font-semibold text-[#2D2A26]">
-                Emergency Market Strength
-                </Typography>
-                <Typography className="font-workSans font-normal pt-1">
-                  As the sun casts its first rays on the markets, let&apos;s
-                  seize the day with a quick snapshot of fiscal possibilities.
-                </Typography>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
-      </div>
-      {selectedPdf && (
-        <Dialog open={open} handler={() => setOpen(false)} size="xl">
-          <div className="flex mx-auto justify-center items-center h-full">
-            <iframe
-              src={selectedPdf.file_link}
-              title={selectedPdf.title}
-              width="100%"
-              height="600px"
-            />
-          </div>
-        </Dialog>
-      )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          {pdfData.slice(startIndex, endIndex).map((data, index) => (
+            <div key={startIndex + index} >
+              <Card className="mt-6">
+                <CardHeader color="blue-gray" className="relative h-58">
+                  {imageUrls[startIndex + index] && (
+                    <img
+                      src={imageUrls[startIndex + index]}
+                      alt={`Random Image`}
+                      className="h-40 w-full max-w-full rounded-lg object-cover object-center"
+                    />
+                  )}
+                </CardHeader>
+                <CardBody>
+                  <Typography className="mb-1 text-lg leading-tight font-workSans font-semibold text-[#2D2A26]">
+                    Emergency Market Strength
+                  </Typography>
+                  <Typography className="font-workSans font-normal pt-1">
+                    As the sun casts its first rays on the markets, let&apos;s
+                    seize the day with a quick snapshot of fiscal possibilities.
+                  </Typography>
+                </CardBody>
+              </Card>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="w-[90%] mx-auto py-10 px-10 h-[4rem] bg-white rounded shadow flex justify-between items-center">
         <div className="flex items-center gap-8">
@@ -198,10 +186,11 @@ export default function Landing() {
           </IconButton>
         </div>
         <div className="flex items-start justify-start gap-2 ">
-          <Button className="bg-orange" onClick={handleLoadMore}>Load more</Button>
+          <Button className="bg-orange" onClick={handleLoadMore}>
+            Load more
+          </Button>
         </div>
       </div>
-
     </LandingLayout>
   );
 }
