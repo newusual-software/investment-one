@@ -4,12 +4,13 @@ import { pdfData } from "../data/pdf";
 import LandingLayout from "../layouts/landingLayout";
 import axios from "axios";
 import { Card, CardBody, CardHeader, Typography } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 export default function InsightData() {
     const [imageUrls, setImageUrls] = useState([]);
     const currentPage = 1
     const ITEMS_PER_PAGE = 8;
-  
+    const navigate = useNavigate()
   
     useEffect(() => {
       const fetchRandomImages = async () => {
@@ -58,7 +59,7 @@ export default function InsightData() {
             iaculis malesuada ultrices eu auctor.
           </h4>
           <div>
-            <button className="bg-orange w-[15rem] text-white rounded-lg py-3">
+            <button onClick={() => navigate("/login")} className="bg-orange w-[15rem] text-white rounded-lg py-3">
               Login
             </button>
           </div>

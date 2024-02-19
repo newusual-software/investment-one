@@ -13,7 +13,7 @@ const LandingHeaderInfo = () => {
       </div>
       <div className="font-workSans font-bold text-[40px] text-[#000] "> RESEARCH </div>
       <div>
-        <a href="https://www.investment-one.com/" target="_blank" rel="noopener noreferrer">
+        <a href="/login" target="_blank" rel="noopener noreferrer">
         <button className="w-[10rem] h-[2.7rem] bg-transparent border-2 border-orange rounded-md flex items-center justify-center gap-2">
           <span className="text-orange text-sm font-normal font-workSans leading-snug tracking-wide">
           Login
