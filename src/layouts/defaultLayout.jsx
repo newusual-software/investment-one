@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 export default function DefaultLayout({ children }) {
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/research-portal";
   return (
     <div>
       <Header />

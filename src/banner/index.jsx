@@ -1,5 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 /* eslint-disable react/no-unescaped-entities */
 const HomeBanner = () => {
+  const navigate = useNavigate()
   return (
     <div
       className="w-full 
@@ -37,7 +40,7 @@ const HomeBanner = () => {
         </h4>
       </div>
       <div>
-        <button className="bg-orange w-[15rem] text-white rounded-lg py-3">
+        <button onClick={() => navigate("/login")} className="bg-orange w-[15rem] text-white rounded-lg py-3">
         Login
         </button>
       </div>
