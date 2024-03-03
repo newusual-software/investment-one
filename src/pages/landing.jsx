@@ -11,45 +11,55 @@ import {
 } from "@material-tailwind/react";
 import { pdfData } from "../data/pdf";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { client } from "../services/sanity/sanityClient";
+import { truncateString } from "../lib/utils/truncateString";
 
 export default function Landing() {
   const [active, setActive] = useState(1);
-  const [imageUrls, setImageUrls] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   let navigate = useNavigate();
   const ITEMS_PER_PAGE = 8;
 
+  const [insightData, setInsightData] = useState([] || pdfData)
+  const [marketArticle, setMarketArticle] = useState([] || pdfData)
+  const [insightAds, setInsightAds] = useState({})
 
   useEffect(() => {
-    const fetchRandomImages = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.unsplash.com/photos/random`,
-          {
-            params: {
-              query: "finance",
-              count: pdfData.length, // Fetch a random image for each item in pdfData
-              client_id: "Ei5L_WMwdu5qTDzm6UuWKChYUzdpGfpPMABrDr5zU4c",
-              orientation: "landscape",
-            },
-          }
-        );
 
-        const randomImages = response.data.map((image) => image.urls.regular);
-        setImageUrls(randomImages);
-      } catch (error) {
-        setImageUrls(
-          "https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg"
-        );
+    // for market insight blog
 
-        console.error("Error fetching random images:", error);
+    client
+    .fetch('*[_type == "marketInsightBlog"] | order(_createdAt asc)')
+    .then((data) => {
+      setInsightData(data)
+    })
+    .catch((error) =>
+      console.error("Error fetching whyChooseFarm2Home data:", error)
+    );
+
+    //for marrket insight data 
+    client
+    .fetch('*[_type == "marketInsightAds"][0]')
+    .then((data) => {
+      if (data) {
+        setInsightAds(data);
       }
-    };
+    })
+    .catch((error) => console.error("Error fetching data:", error));
 
-    fetchRandomImages();
+  // for market insight blog
+
+  client
+  .fetch('*[_type == "marketArticle"] | order(_createdAt asc)')
+  .then((data) => {
+    setMarketArticle(data)
+  })
+  .catch((error) =>
+    console.error("Error fetching whyChooseFarm2Home data:", error)
+  );
+
   }, []);
 
   const next = () => {
@@ -73,6 +83,39 @@ export default function Landing() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
+  // Function to format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+
+    // Convert month name to abbreviated format
+    const month = formattedDate.split(' ')[0];
+    const abbreviatedMonth = month.substring(0, 3);
+
+    // Convert day to ordinal format
+    const day = formattedDate.split(' ')[1].replace(/,/g, '');
+    const ordinalDay = day + (
+      day === '1' || day === '21' || day === '31' ? 'st' :
+      day === '2' || day === '22' ? 'nd' :
+      day === '3' || day === '23' ? 'rd' : 'th'
+    );
+
+    // Construct the final formatted date
+    return `${ordinalDay} ${abbreviatedMonth}, ${date.getFullYear()}`;
+  };
+  const formatDateed = (dateString) => {
+    const date = new Date(dateString);
+  
+    // Extract day, month, and year
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString().substring(2);
+  
+    // Construct the final formatted date
+    return `${day}${month}${year}`;
+  };
+
   return (
     <LandingLayout>
       <HomeBanner />
@@ -80,14 +123,14 @@ export default function Landing() {
         Market Insights
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 px-20 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-9">
-        {pdfData.slice(startIndex, endIndex).map((data, index) => (
-          <div key={startIndex + index} onClick={() => navigate(`insight-data/${index}`)}>
+        {insightData?.slice(startIndex, endIndex).map((data, index) => (
+          <div key={startIndex + index} onClick={() => navigate(`insight-data/${data._id}`)}>
             <Card className="mt-6">
-              <CardHeader color="blue-gray" className="relative h-58">
-                {imageUrls[startIndex + index] && (
+              <CardHeader className="relative h-58">
+                {data?.coverImage && (
                   <img
                     src={
-                      imageUrls[startIndex + index] ||
+                      data?.coverImage.cloudinaryUrl ||
                       "https://res.cloudinary.com/phantom1245/image/upload/v1703460661/investment-one/preview_1_iu8bhh.jpg"
                     }
                     alt={`Random Image`}
@@ -97,13 +140,14 @@ export default function Landing() {
               </CardHeader>
               <CardBody>
                 <Typography className="mb-1 text-sm font-workSans font-semibold text-orange">
-                  MORNING INSIGHT {data.date}
+                  MARKET INSIGHT {formatDateed(data._createdAt)}
                 </Typography>
                 <Typography className="text-black font-workSans font-semibold text-xl">
-                  The Global Economic Impacts of AI
+                  {truncateString(data?.title, 36) || "The Global Economic Impacts of AI"}
                 </Typography>
+                {/* Replace hard-coded date with formatted date */}
                 <Typography className="text-sm pt-2">
-                  28th January,2024{" "}
+                  {formatDate(data._createdAt)}{" "}
                 </Typography>
               </CardBody>
             </Card>
@@ -114,35 +158,30 @@ export default function Landing() {
       <div className="w-full bg-[#212323] justify-around items-center p-20 flex ">
         <div className="gap-3 text-white w-1/2">
           <h1 className="text-5xl w-full font-workSans font-bold ">
-            Discover what’s Happening in the Market
+            {insightAds?.title || "Discover what’s Happening in the Market"}
           </h1>
           <h4 className="text-lg py-4 w-[85%]">
-            Lorem ipsum dolor sit amet consectetur. Mattis venenatis ultricies
-            ante ultrices ac. Eget integer enim eu aliquet. Interdum vitae et
-            posuere felis faucibus adipiscing metus dictum bibendum. Hac
-            adipiscing sed viverra lorem auctor sed condimentum. Ut purus
-            ultrices malesuada id. Vitae dictum odio velit feugiat et cursus.
-            Cursus euismod amet augue id duis tortor in enim. Facilisi enim sed
-            iaculis malesuada ultrices eu auctor.
+            {insightAds?.content}
           </h4>
         </div>
         <div className="flex justify-center items-center w-1/2">
           <img
-            src="https://res.cloudinary.com/phantom1245/image/upload/v1708182229/investment-one/iPhone_15_Pro_Portrait_Mockup_dkpjun.png"
+            src={insightAds?.Adimage?.cloudinaryUrl || "https://res.cloudinary.com/phantom1245/image/upload/v1708182229/investment-one/iPhone_15_Pro_Portrait_Mockup_dkpjun.png"}
             className="w-[30%]"
             alt=""
           />
         </div>
       </div>
+
       <div className="my-12 px-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {pdfData.slice(startIndex, endIndex).map((data, index) => (
-            <div key={startIndex + index} >
+          {marketArticle.slice(startIndex, endIndex).map((data, index) => (
+            <div key={startIndex + index} className="cursor-pointer" onClick={() => navigate(`/insight-article/${data._id}`)}>
               <Card className="mt-6">
                 <CardHeader color="blue-gray" className="relative h-58">
-                  {imageUrls[startIndex + index] && (
+                  {data?.coverImage && (
                     <img
-                      src={imageUrls[startIndex + index]}
+                      src={data?.coverImage?.cloudinaryUrl}
                       alt={`Random Image`}
                       className="h-40 w-full max-w-full rounded-lg object-cover object-center"
                     />
@@ -150,11 +189,10 @@ export default function Landing() {
                 </CardHeader>
                 <CardBody>
                   <Typography className="mb-1 text-lg leading-tight font-workSans font-semibold text-[#2D2A26]">
-                    Emergency Market Strength
+                    { data?.title || "Emergency Market Strength" }
                   </Typography>
                   <Typography className="font-workSans font-normal pt-1">
-                    As the sun casts its first rays on the markets, let&apos;s
-                    seize the day with a quick snapshot of fiscal possibilities.
+                   {data?.description}
                   </Typography>
                 </CardBody>
               </Card>
@@ -174,13 +212,13 @@ export default function Landing() {
           </IconButton>
           <Typography color="gray" className="font-normal">
             Page <strong className="text-gray-900">{active}</strong> of{" "}
-            <strong className="text-gray-900">10</strong>
+            <strong className="text-gray-900">{marketArticle.length}</strong>
           </Typography>
           <IconButton
             size="sm"
             variant="outlined"
             onClick={next}
-            disabled={active === 10}
+            disabled={active === marketArticle.length}
           >
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </IconButton>
