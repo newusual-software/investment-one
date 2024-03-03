@@ -10,6 +10,7 @@ import ResearchPortal from "./pages/researchPortal.jsx";
 import InsightData from "./pages/insightData.jsx";
 import Login from "./pages/login.jsx";
 import MarketData from "./pages/market-data.jsx";
+import InsightArticle from "./pages/insightArticle.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/market-data" element={<MarketData />} />
           <Route path="/insight-data/:id" element={<InsightData />} />
+          <Route path="/insight-article/:id" element={<InsightArticle />} />
         </Routes>
       </Router>
     </>

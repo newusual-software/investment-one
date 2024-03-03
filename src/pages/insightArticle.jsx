@@ -28,33 +28,28 @@ export default function InsightData() {
   const currentPage = 1;
   const ITEMS_PER_PAGE = 8;
   const navigate = useNavigate();
-
   const [insightData, setInsightData] = useState(null);
-  const [insightDatas, setInsightDatas] = useState([] || pdfData);
   const { id } = useParams();
+  const [marketArticle, setMarketArticle] = useState([] || pdfData);
 
   useEffect(() => {
-
-
-    client
-      .fetch('*[_type == "marketInsightBlog"] | order(_createdAt asc)')
-      .then((data) => {
-        console.log(data)
-        setInsightDatas(data);
-      })
-      .catch((error) =>
-        console.error("Error fetching whyChooseFarm2Home data:", error)
-      );
-
     // Fetch the specific data item using the ID from the URL parameter
     client
-      .fetch(`*[_type == "marketInsightBlog" && _id == $id][0]`, { id })
+      .fetch(`*[_type == "marketArticle" && _id == $id][0]`, { id })
       .then((data) => {
         setInsightData(data);
       })
       .catch((error) => {
         console.error("Error fetching market insight blog data:", error);
       });
+    client
+      .fetch('*[_type == "marketArticle"] | order(_createdAt asc)')
+      .then((data) => {
+        setMarketArticle(data);
+      })
+      .catch((error) =>
+        console.error("Error fetching whyChooseFarm2Home data:", error)
+      );
   }, [id]);
 
   if (!insightData) {
@@ -157,13 +152,10 @@ export default function InsightData() {
         Articles you may also like to read:
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 px-20 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-9">
-        {insightDatas.slice(0, 4).map((data, index) => (
-          <div
-            key={startIndex + index}
-            onClick={() => navigate(`insight-data/${data._id}`)}
-          >
+        {marketArticle.slice(0, 4).map((data, index) => (
+          <div key={startIndex + index} className="cursor-pointer"  onClick={() => navigate(`/insight-article/${data._id}`)}>
             <Card className="mt-6">
-              <CardHeader className="relative h-58">
+              <CardHeader color="blue-gray" className="relative h-58">
                 {data?.coverImage && (
                   <img
                     src={
@@ -176,14 +168,13 @@ export default function InsightData() {
                 )}
               </CardHeader>
               <CardBody>
+                <Typography className="mb-1 text-sm font-workSans font-semibold text-black">
+                { data?.title || "Emergency Market Strength" }
+                </Typography>
                 <Typography className="text-black font-workSans font-semibold text-xl">
-                  {truncateString(data?.title, 20) ||
-                    "The Global Economic Impacts of AI"}
+                {truncateString(data?.description, 40)}
                 </Typography>
-                
-                <Typography className="text-gray-500 font-workSans font-normal text-lg">
-                  {truncateString(data?.description, 30)}
-                </Typography>
+          
               </CardBody>
             </Card>
           </div>
