@@ -160,7 +160,7 @@ export default function InsightData() {
         {insightDatas.slice(0, 4).map((data, index) => (
           <div
             key={startIndex + index}
-            onClick={() => navigate(`insight-data/${data._id}`)}
+            onClick={() => navigate(`/insight-data/${data._id}`)}
           >
             <Card className="mt-6">
               <CardHeader className="relative h-58">

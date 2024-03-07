@@ -124,7 +124,7 @@ export default function Landing() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 px-20 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-9">
         {insightData?.slice(startIndex, endIndex).map((data, index) => (
-          <div key={startIndex + index} onClick={() => navigate(`insight-data/${data._id}`)}>
+          <div key={startIndex + index} onClick={() => navigate(`/insight-data/${data._id}`)}>
             <Card className="mt-6">
               <CardHeader className="relative h-58">
                 {data?.coverImage && (
