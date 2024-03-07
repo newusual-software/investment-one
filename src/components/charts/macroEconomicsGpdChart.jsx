@@ -10,6 +10,8 @@ import {
   Filler,
   Legend,
 } from "chart.js/auto";
+import { useEffect, useState } from "react";
+import { client } from "../../services/sanity/sanityClient";
 
 ChartJS.register(
   CategoryScale,
@@ -23,50 +25,63 @@ ChartJS.register(
 );
 
 export default function MacroEconomicsGpdChart() {
-  const smooth = true; // Set to true for smooth tension, false for no tension
+  const [graphData, setGraphData] = useState({})
+  useEffect(() => {
+    // Define the query to fetch the chart data
+    const query = `*[_type == "macroEconomicsGpdChart"]`;
+
+    // Execute the query
+    client.fetch(query)
+      .then(data => {
+        // Set the fetched data to the state
+        setGraphData(data[0]);
+      })
+      .catch(error => console.error(error));
+  }, []);
+  const smooth = graphData?.smooth;
   const options = {
-    responsive: true,
+    responsive: graphData?.options?.responsive,
     plugins: {
       legend: {
-        position: "top",
+        position: graphData?.options?.plugins?.legend?.position,
       },
       title: {
-        display: false,
-        text: "Chart.js Line Chart",
+        display: graphData?.options?.plugins?.title?.display,
+        text: graphData?.options?.plugins?.title?.text,
       },
     },
     scales: {
       y: {
-        beginAtZero: true,
+        beginAtZero: graphData?.options?.scales?.y?.beginAtZero,
         title: {
-          display: true,
-          text: "Percentage (%)",
+          display: graphData?.options?.scales?.y?.title?.display,
+          text: graphData?.options?.scales?.y?.title?.text,
         },
       },
     },
     elements: {
       line: {
-        tension: smooth ? 0.5 : 0,
+        tension: smooth ? graphData?.options?.elements?.line?.tension : 0,
       },
     },
   };
 
-  const labels = ["2023 Q1", "2022 Q2", "2021 Q3", "2020 Q4", "2020 Q5"];
+  const labels = graphData?.labels;
 
   const data = {
     labels,
     datasets: [
       {
-        fill: true,
-        label: "GDP Growth",
-        data: [0, 0, -3.62, -6.1, 1.87],
-        backgroundColor: "rgba(249, 115, 12, .2)",
-        borderColor: "rgba(249, 115, 12, 1)",
-        borderWidth: 1,
-        pointRadius: 3,
-        pointHitRadius: 3,
-        pointBorderColor: "rgba(249, 115, 12, 1)",
-        pointBackgroundColor: "rgba(249, 115, 12, 1)",
+        fill: graphData?.datasets?.fill,
+        label: graphData?.datasets?.label,
+        data: graphData?.datasets?.data,
+        backgroundColor: graphData?.datasets?.backgroundColor,
+        borderColor: graphData?.datasets?.borderColor,
+        borderWidth: graphData?.datasets?.borderWidth,
+        pointRadius: graphData?.datasets?.pointRadius,
+        pointHitRadius: graphData?.datasets?.pointHitRadius,
+        pointBorderColor: graphData?.datasets?.pointBorderColor,
+        pointBackgroundColor: graphData?.datasets?.pointBackgroundColor,
       },
     ],
   };
