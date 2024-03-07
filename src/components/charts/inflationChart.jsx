@@ -10,6 +10,8 @@ import {
   Filler,
   Legend,
 } from "chart.js/auto";
+import { useEffect, useState } from "react";
+import { client } from "../../services/sanity/sanityClient";
 
 ChartJS.register(
   CategoryScale,
@@ -23,69 +25,39 @@ ChartJS.register(
 );
 
 export default function InflationChart() {
-  const smooth = true; 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-        text: "Chart.js Line Chart",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Percentage (%)",
-        },
-      },
-      x: { ticks: { autoSkip: true, maxTicksLimit: 7, padding: 10, minRotation: 0, maxRotation: 0 } },
+  const [graphData, setGraphData] = useState({});
 
-    },
+  useEffect(() => {
+    // Define the query to fetch the chart data
+    const query = `*[_type == "inflationChart"]`;
+
+    // Execute the query
+    client.fetch(query)
+      .then(data => {
+        // Set the fetched data to the state
+        setGraphData(data[0]);
+      })
+      .catch(error => console.error(error));
+  }, []);
+  console.log(graphData)
+  const smooth = graphData?.smooth; 
+  const options = {
+    responsive: graphData?.options?.responsive,
+    plugins: graphData?.options?.plugins,
+    scales: graphData?.options?.scales,
     elements: {
       line: {
-        tension: smooth ? 0.5 : 0,
+        tension: smooth ? graphData?.options?.elements?.line?.tension : 0,
       },
     },
   };
 
-  const labels = [
-    "Feb/2021",
-    "Feb/2021",
-    "Mar/2021",
-    "Mar/2021",
-    "Apr/2021",
-    "Apr/2021",
-    "May/2021",
-    "May/2021",
-    "Jun/2021",
-    "Jun/2021",
-    "Jul/2021",
-    "Jul/2021",
-  ];
+  const labels = graphData?.labels;
 
   const data = {
     labels,
     datasets: [
-      {
-        fill: true,
-        label: "Headline inflation (year on year",
-        data: [
-          17.33, 17.33, 18.17, 18.17, 18.17, 18.12, 18.12, 17.93, 17.93, 17.75,
-          17.75, 17.75, 17.38, 17.39,
-        ], // Values for each quarter
-        backgroundColor: "rgba(249, 115, 12, .2)",
-        borderColor: "rgba(249, 115, 12, 1)",
-        borderWidth: 1,
-        pointRadius: 3,
-        pointHitRadius: 3,
-        pointBorderColor: "rgba(249, 115, 12, 1)",
-        pointBackgroundColor: "rgba(249, 115, 12, 1)",
-      },
+      graphData?.datasets
     ],
   };
 
