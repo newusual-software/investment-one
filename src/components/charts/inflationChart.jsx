@@ -39,7 +39,6 @@ export default function InflationChart() {
       })
       .catch(error => console.error(error));
   }, []);
-  console.log(graphData)
   const smooth = graphData?.smooth; 
   const options = {
     responsive: graphData?.options?.responsive,

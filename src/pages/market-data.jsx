@@ -22,7 +22,6 @@ export default function MarketData() {
         .get("https://restserver3.cardinalstone.com/api/getSecurityNames")
         .then((response) => {
           if (response.data) {
-            console.log(response?.data);
             setData(response?.data);
           }
         })

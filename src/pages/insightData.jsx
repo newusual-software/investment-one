@@ -39,7 +39,6 @@ export default function InsightData() {
     client
       .fetch('*[_type == "marketInsightBlog"] | order(_createdAt asc)')
       .then((data) => {
-        console.log(data)
         setInsightDatas(data);
       })
       .catch((error) =>
