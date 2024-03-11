@@ -154,7 +154,6 @@ export default function Landing() {
           </div>
         ))}
       </div>
-
       <div className="w-full bg-[#212323] justify-around items-center p-20 flex ">
         <div className="gap-3 text-white w-1/2">
           <h1 className="text-5xl w-full font-workSans font-bold ">

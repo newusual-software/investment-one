@@ -1,9 +1,9 @@
 import AnalystView from "../molecule/macroEconomics/analystView";
 import { MacroEconomicsContent } from "../molecule/macroEconomics/macroEconomicsContent";
-import { Outlook } from "../molecule/macroEconomics/outlook";
 import { TabsWithIcon } from "../molecule/tab/tab";
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
+import Outlook from "../molecule/macroEconomics/outlook";
 export default function MacroEconomics() {
   const data = [
     {
