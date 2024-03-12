@@ -7,6 +7,12 @@ import { Banking } from "../outlooks/banking";
 import { InitialImpression } from "../outlooks/initialImpression";
 import { Breweries } from "../outlooks/breweries";
 import { BrewiesInitialImpression } from "../outlooks/brewiesInitialImpression";
+import { ConsumerGoods } from "../outlooks/consumerGoods";
+import { Industrial } from "../outlooks/industrial";
+import { OilAndGas } from "../outlooks/oilAndGas";
+import { ConsumerGoodInitialImpression } from "../outlooks/consumerGoodInitialImpression";
+import { IndustryInitialImpression } from "../outlooks/IndustryInitialImpression";
+import { OilAndGasInitialImpression } from "../outlooks/oilAndGasInitialImpression";
 
 export function EquitiesContent() {
   const [selectedOption, setSelectedOption] = useState("NSE-ASI");
@@ -52,27 +58,27 @@ export function EquitiesContent() {
       case "consumer-goods":
         switch (altSelectedOption) {
           case "company-report":
-            return <Breweries />;
+            return <ConsumerGoods />;
           case "initial-impression":
-            return <BrewiesInitialImpression />;
+            return <ConsumerGoodInitialImpression />;
           default:
             return null;
         }
       case "industrial":
         switch (altSelectedOption) {
           case "company-report":
-            return <Breweries />;
+            return <Industrial />;
           case "initial-impression":
-            return <BrewiesInitialImpression />;
+            return <IndustryInitialImpression />;
           default:
             return null;
         }
       case "oil-&-gas":
         switch (altSelectedOption) {
           case "company-report":
-            return <Breweries />;
+            return <OilAndGas />;
           case "initial-impression":
-            return <BrewiesInitialImpression />;
+            return <OilAndGasInitialImpression />;
           default:
             return null;
         }

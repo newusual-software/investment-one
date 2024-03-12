@@ -3,14 +3,14 @@ import { Button, Dialog } from "@material-tailwind/react";
 import { client } from "../../../services/sanity/sanityClient";
 
 
-export function Banking() {
+export function ConsumerGoods() {
   const [open, setOpen] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState(null);
   const [pdfData, setPdfData] = useState([]);
 
   useEffect(() => {
     // Define the query to fetch the chart data
-    const query = `*[_type == "bankingReport"]{
+    const query = `*[_type == "consumerGoodReport"]{
       pdfs[]{
         title,
         "fileUrl": file.asset->url,

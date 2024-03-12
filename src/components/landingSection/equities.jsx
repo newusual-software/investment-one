@@ -3,7 +3,11 @@ import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import { EquitiesContent } from "../molecule/equities/equitiesContent";
 import { EquitiesOutlook } from "../molecule/equities/equityOutlook";
+import { useEffect, useState } from "react";
+import { client } from "../../services/sanity/sanityClient";
 export default function Equities() {
+  const [graphData, setGraphData] = useState({});
+
   const data = [
     {
       label: "Equities",
@@ -18,15 +22,31 @@ export default function Equities() {
       desc: <EquitiesOutlook />,
     },
   ];
+  useEffect(() => {
+    // Define the query to fetch the chart data
+    const query = `*[_type == "nseAsiChart"]{
+        title,
+        "imageUrl": coverImage.asset->url
+      }
+    `;
+
+    // Execute the query
+    client.fetch(query)
+      .then(data => {
+        // Set the fetched data to the state
+        setGraphData(data[0]);
+      })
+      .catch(error => console.error(error));
+  }, []);
   return (
     <div className="my-14  w-full">
       <div className="py-4 text-neutral-800 text-[32px]  font-medium font-workSans">
-        Equities
+        {graphData?.title || "Equities"}
       </div>
       <div className="flex gap-4 flex-row ">
         <div className=" w-[40%] ">
           <img
-            src="https://res.cloudinary.com/phantom1245/image/upload/v1703172024/investment-one/Frame_46_miz12y.png"
+            src={graphData?.imageUrl || "https://res.cloudinary.com/phantom1245/image/upload/v1703172024/investment-one/Frame_46_miz12y.png"}
             alt="equities image"
           />
         </div>

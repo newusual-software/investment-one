@@ -4,6 +4,8 @@ import { TabsWithIcon } from "../molecule/tab/tab";
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import Outlook from "../molecule/macroEconomics/outlook";
+import { useEffect, useState } from "react";
+import { client } from "../../services/sanity/sanityClient";
 export default function MacroEconomics() {
   const data = [
     {
@@ -19,11 +21,24 @@ export default function MacroEconomics() {
       desc: <Outlook />,
     },
   ];
+  const [graphData, setGraphData] = useState({})
+  useEffect(() => {
+    // Define the query to fetch the chart data
+    const query = `*[_type == "macroEconomicsGpdChart"]`;
+
+    // Execute the query
+    client.fetch(query)
+      .then(data => {
+        // Set the fetched data to the state
+        setGraphData(data[0]);
+      })
+      .catch(error => console.error(error));
+  }, []);
   return (
     <div className="flex my-10 gap-4 flex-row w-full">
       <div className="w-[60%] flex flex-col gap-10 items-start">
         <div className="text-center text-neutral-800 text-[32px] font-medium font-workSans">
-          Macro-Economics
+          {graphData.title || "Macro-Economics"}
         </div>
         <div>
           <TabsWithIcon data={data} activeTabValue={"MacroEconomics"}/>
