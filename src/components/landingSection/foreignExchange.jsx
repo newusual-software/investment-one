@@ -1,8 +1,8 @@
 import { TabsWithIcon } from "../molecule/tab/tab";
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
-import { EquitiesOutlook } from "../molecule/equities/equityOutlook";
 import { FxContent } from "../molecule/foreignExchange/fxContent";
+import { ForeignExchangeOutlook } from "../molecule/foreignExchange/foreignExchangeOutlook";
 export default function ForeignExchange() {
   const data = [
     {
@@ -15,7 +15,7 @@ export default function ForeignExchange() {
       label: "Outlook",
       value: "Outlook",
       icon: ListBulletIcon,
-      desc: <EquitiesOutlook />,
+      desc: <ForeignExchangeOutlook />,
     },
   ];
   return (

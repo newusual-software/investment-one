@@ -1,9 +1,9 @@
 import { TabsWithIcon } from "../molecule/tab/tab";
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { ChartBarIcon } from "@heroicons/react/24/outline";
-import { EquitiesOutlook } from "../molecule/equities/equityOutlook";
 import { BondYield } from "../molecule/fixedIncome/bondYield";
 import { TBills } from "../molecule/fixedIncome/tBills";
+import { FixedIncomeOutlook } from "../molecule/fixedIncome/fixedIncomeOutlook";
 export default function FixedIncome() {
   const data = [
     {
@@ -22,7 +22,7 @@ export default function FixedIncome() {
       label: "Outlook",
       value: "Outlook",
       icon: ListBulletIcon,
-      desc: <EquitiesOutlook />,
+      desc: <FixedIncomeOutlook />,
     },
   ];
   return (
